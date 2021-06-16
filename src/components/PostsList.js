@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const PostsList = ({posts}) => {
-    return (
-        <div>
-            <div className="posts-list">
+const PostsList = ({ posts }) => {
+  return (
+    <div>
+      <div className="posts-list">
         {posts.map((post) => (
           <div className="post-wrapper" key={post._id}>
             <div className="post-header">
@@ -51,8 +52,14 @@ const PostsList = ({posts}) => {
           </div>
         ))}
       </div>
-        </div>
-    )
-}
+    </div>
+  );
+};
 
-export default PostsList
+//Checking the type of props passed to the component
+PostsList.propTypes = {
+  //Type of props and it is required
+  posts: PropTypes.array.isRequired,
+};
+
+export default PostsList;

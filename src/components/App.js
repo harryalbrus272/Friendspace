@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions/posts';
-import {PostsList} from './';
+import { PostsList } from './';
 function App(props) {
   const { posts } = props;
   useEffect(() => {
@@ -11,7 +12,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <PostsList posts={posts}/>
+      <PostsList posts={posts} />
     </div>
   );
 }
@@ -20,6 +21,10 @@ let mapStateToProps = (state) => {
     posts: state.posts,
     users: state.users,
   };
+};
+
+App.propTypes = {
+  posts: PropTypes.array.isRequired,
 };
 
 export default connect(mapStateToProps)(App);
