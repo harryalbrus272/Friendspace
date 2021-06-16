@@ -1,4 +1,4 @@
-export default function users(state = []) {
+export default function users(state = ['someusers']) {
     return state;
   }
   
