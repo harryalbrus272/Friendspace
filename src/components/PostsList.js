@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PostsList = ({ posts }) => {
+const PostsList = (props) => {
+  console.log("props", props);
+  const { posts } = props;
   return (
     <div>
       <div className="posts-list">

@@ -11,14 +11,21 @@ function App(props) {
   }, []);
   console.log('state in app.js', props);
 
+  //If you declare component like this and use the component property in router dom then you get router elements in props
+  const Home = (props) => {
+    console.log(props);
+    return <h2>Hello to the World!</h2>;
+  };
+
   return (
     <Router>
       <div className="App">
         <Navbar />
         <Switch>
           <Route exact path="/">
-            <PostsList posts={posts} />
+            {(props) => <PostsList posts={posts} {...props} />}
           </Route>
+          <Route exact path="/home" component={Home} />
         </Switch>
       </div>
     </Router>
