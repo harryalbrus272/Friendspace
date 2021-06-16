@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions/posts';
-import { PostsList, Navbar } from './';
+import { Home, Navbar } from './';
 function App(props) {
   const { posts } = props;
   useEffect(() => {
@@ -12,20 +12,17 @@ function App(props) {
   console.log('state in app.js', props);
 
   //If you declare component like this and use the component property in router dom then you get router elements in props
-  const Home = (props) => {
-    console.log(props);
-    return <h2>Hello to the World!</h2>;
-  };
-
+  // const Home = (props) => {
+  //   console.log(props);
+  //   return <h2>Hello to the World!</h2>;
+  // };
   return (
     <Router>
       <div className="App">
         <Navbar />
         <Switch>
-          <Route exact path="/">
-            {(props) => <PostsList posts={posts} {...props} />}
-          </Route>
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/" render={(props) => <Home {...props} posts={posts} />} />
+          {/* <Route exact path="/home" component={Home} /> */}
         </Switch>
       </div>
     </Router>
