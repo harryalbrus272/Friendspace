@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar } from './';
+import { Home, Navbar, Page404 } from './';
 function App(props) {
   const { posts } = props;
   useEffect(() => {
@@ -21,8 +21,13 @@ function App(props) {
       <div className="App">
         <Navbar />
         <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} posts={posts} />} />
+          <Route
+            exact
+            path="/"
+            render={(props) => <Home {...props} posts={posts} />}
+          />
           {/* <Route exact path="/home" component={Home} /> */}
+          <Route component={Page404} />
         </Switch>
       </div>
     </Router>
