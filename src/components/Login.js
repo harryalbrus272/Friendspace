@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-const Login = () => {
+import { connect } from 'react-redux';
+import { login } from '../actions/auth';
+const Login = (props) => {
+  const { error, inProgress } = props.auth;
+  console.log(props);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   //using Ref in the class based component to make a uncontroled component- a component whose state is not directly controlled by React.
@@ -10,12 +14,15 @@ const Login = () => {
   // }
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log('email', email, 'password', password);
-    console.log('Called Submit in login', event);
+    if (email && password) {
+      console.log('props in login', props);
+      props.dispatch(login(email, password));
+    }
   };
   return (
     <form className="login-form" onSubmit={handleFormSubmit}>
       <span className="login-signup-header">Log In</span>
+      {error && <div className="alert error-dailog">{error}</div>}
       <div className="field">
         <input
           type="email"
@@ -35,10 +42,22 @@ const Login = () => {
         />
       </div>
       <div className="field">
-        <button type="submit">Log In</button>
+        {inProgress ? (
+          <button type="submit" disabled={inProgress}>
+            Logging In ...
+          </button>
+        ) : (
+          <button type="submit" disabled={inProgress}>
+            Log In
+          </button>
+        )}
       </div>
     </form>
   );
 };
-
-export default Login;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+export default connect(mapStateToProps)(Login);
