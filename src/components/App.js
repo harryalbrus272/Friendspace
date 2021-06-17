@@ -3,11 +3,27 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login } from './';
+import { Home, Navbar, Page404, Login, Register } from './';
+import * as jwtDecode from 'jwt-decode';
+import { authenticateUser } from '../actions/auth';
 function App(props) {
   const { posts } = props;
   useEffect(() => {
     props.dispatch(fetchPosts());
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const user = jwtDecode(token);
+
+      console.log('user', user);
+      props.dispatch(
+        authenticateUser({
+          email: user.email,
+          _id: user._id,
+          name: user.name,
+        })
+      );
+    }
   }, []);
   console.log('state in app.js', props);
 
@@ -28,6 +44,7 @@ function App(props) {
           />
           <Route exact path="/login" component={Login} />
           {/* <Route exact path="/home" component={Home} /> */}
+          <Route exact path="/register" component={Register}></Route>
           <Route component={Page404} />
         </Switch>
       </div>
