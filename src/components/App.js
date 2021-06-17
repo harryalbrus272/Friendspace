@@ -7,7 +7,7 @@ import { Home, Navbar, Page404, Login } from './';
 function App(props) {
   const { posts } = props;
   useEffect(() => {
-    fetchPosts();
+    props.dispatch(fetchPosts());
   }, []);
   console.log('state in app.js', props);
 
