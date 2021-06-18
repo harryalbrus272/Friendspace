@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startSingup, signup, clearAuthState } from '../actions/auth';
 
 const Register = (props) => {
-  const { inProgress, error } = props.auth;
+  const { inProgress, error, isLoggedin } = props.auth;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -36,6 +37,11 @@ const Register = (props) => {
       props.dispatch(clearAuthState())
     }
   }, []);
+
+  //redirecting user
+  if (isLoggedin) {
+    return <Redirect to="/" />;
+  }
   return (
     <form onSubmit={handleFormSubmit} className="login-form">
       <span className="login-signup-header"> Signup</span>

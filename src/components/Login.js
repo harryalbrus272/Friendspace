@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { clearAuthState, login } from '../actions/auth';
 const Login = (props) => {
-  const { error, inProgress } = props.auth;
+  const { error, inProgress, isLoggedin } = props.auth;
   console.log(props);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,9 +24,13 @@ const Login = (props) => {
   //clearing the error
   useEffect(() => {
     return () => {
-      props.dispatch(clearAuthState())
-    }
+      props.dispatch(clearAuthState());
+    };
   }, []);
+  //redirecting user
+  if (isLoggedin) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <form className="login-form" onSubmit={handleFormSubmit}>
