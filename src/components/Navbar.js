@@ -5,8 +5,8 @@ import { logoutUser } from '../actions/auth';
 
 const Navbar = (props) => {
   const logout = () => {
-      localStorage.removeItem('token');
-      props.dispatch(logoutUser());
+    localStorage.removeItem('token');
+    props.dispatch(logoutUser());
   };
   const { auth } = props;
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import { clearAuthState, login } from '../actions/auth';
 const Login = (props) => {
   const { error, inProgress } = props.auth;
   console.log(props);
@@ -19,6 +20,13 @@ const Login = (props) => {
       props.dispatch(login(email, password));
     }
   };
+  //clearing the error
+  useEffect(() => {
+    return () => {
+      props.dispatch(clearAuthState())
+    }
+  }, []);
+
   return (
     <form className="login-form" onSubmit={handleFormSubmit}>
       <span className="login-signup-header">Log In</span>

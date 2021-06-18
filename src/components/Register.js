@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { startSingup, signup } from '../actions/auth';
+import { startSingup, signup, clearAuthState } from '../actions/auth';
 
 const Register = (props) => {
   const { inProgress, error } = props.auth;
@@ -29,6 +30,12 @@ const Register = (props) => {
       props.dispatch(signup(email, password, confirmPassword, name));
     }
   };
+  //clearing the error
+  useEffect(() => {
+    return () => {
+      props.dispatch(clearAuthState())
+    }
+  }, []);
   return (
     <form onSubmit={handleFormSubmit} className="login-form">
       <span className="login-signup-header"> Signup</span>
