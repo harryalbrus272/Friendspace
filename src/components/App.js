@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Register } from './';
+import { Home, Navbar, Page404, Login, Register, Setting } from './';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 function App(props) {
@@ -38,10 +38,7 @@ function App(props) {
   //   console.log(props);
   //   return <h2>Hello to the World!</h2>;
   // };
-
-  const Settings = () => <div>Settings</div>;
   const PrivateRoute = (privateRouteProps) => {
-    console.log('privateRouteProps', privateRouteProps);
     const { isLoggedin, path, component: Component } = privateRouteProps;
     return (
       <Route
@@ -72,7 +69,7 @@ function App(props) {
           <Route exact path="/register" component={Register}></Route>
           <PrivateRoute
             path="/setting"
-            component={Settings}
+            component={Setting}
             isLoggedin={auth.isLoggedin}
           />
           <Route component={Page404} />
