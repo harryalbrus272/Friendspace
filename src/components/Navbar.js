@@ -50,14 +50,16 @@ const Navbar = (props) => {
         </div>
         <div className="right-nav">
           {auth.isLoggedin && (
-            <div className="user">
-              <img
-                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                alt="user-dp"
-                id="user-dp"
-              />
-              <span>{auth.user.name}</span>
-            </div>
+            <Link to="/setting">
+              <div className="user">
+                <img
+                  src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                  alt="user-dp"
+                  id="user-dp"
+                />
+                <span>{auth.user.name}</span>
+              </div>
+            </Link>
           )}
 
           <div className="nav-links">

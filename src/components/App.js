@@ -1,16 +1,22 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions/posts';
 import { Home, Navbar, Page404, Login, Register } from './';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 function App(props) {
-  const { posts } = props;
+  const { posts, auth } = props;
   useEffect(() => {
     props.dispatch(fetchPosts());
     const token = localStorage.getItem('token');
+    console.log('auth', auth);
 
     if (token) {
       const user = jwtDecode(token);
@@ -32,6 +38,25 @@ function App(props) {
   //   console.log(props);
   //   return <h2>Hello to the World!</h2>;
   // };
+
+  const Settings = () => <div>Settings</div>;
+  const PrivateRoute = (privateRouteProps) => {
+    console.log('privateRouteProps', privateRouteProps);
+    const { isLoggedin, path, component: Component } = privateRouteProps;
+    return (
+      <Route
+        path={path}
+        render={(props) => {
+          return isLoggedin ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to="/login" />
+          );
+        }}
+      />
+    );
+  };
+
   return (
     <Router>
       <div className="App">
@@ -45,6 +70,11 @@ function App(props) {
           <Route exact path="/login" component={Login} />
           {/* <Route exact path="/home" component={Home} /> */}
           <Route exact path="/register" component={Register}></Route>
+          <PrivateRoute
+            path="/setting"
+            component={Settings}
+            isLoggedin={auth.isLoggedin}
+          />
           <Route component={Page404} />
         </Switch>
       </div>
@@ -55,6 +85,7 @@ let mapStateToProps = (state) => {
   return {
     posts: state.posts,
     users: state.users,
+    auth: state.auth,
   };
 };
 
