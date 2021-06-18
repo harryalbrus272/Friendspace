@@ -47,7 +47,14 @@ function App(props) {
           return isLoggedin ? (
             <Component {...props} />
           ) : (
-            <Redirect to="/login" />
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: {
+                  from: props.location,
+                },
+              }}
+            />
           );
         }}
       />

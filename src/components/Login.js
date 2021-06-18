@@ -5,6 +5,8 @@ import { Redirect } from 'react-router-dom';
 import { clearAuthState, login } from '../actions/auth';
 const Login = (props) => {
   const { error, inProgress, isLoggedin } = props.auth;
+  //destructuring the from using the props or it will have the pathname of home 
+  const { from } = props.location.state || { from: { pathname: '/' } };
   console.log(props);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +31,7 @@ const Login = (props) => {
   }, []);
   //redirecting user
   if (isLoggedin) {
-    return <Redirect to="/" />;
+    return <Redirect to={from} />;
   }
 
   return (
