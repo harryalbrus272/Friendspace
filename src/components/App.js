@@ -11,11 +11,12 @@ import { fetchPosts } from '../actions/posts';
 import { Home, Navbar, Page404, Login, Register, Setting } from './';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
+import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 function App(props) {
   const { posts, auth } = props;
   useEffect(() => {
     props.dispatch(fetchPosts());
-    const token = localStorage.getItem('token');
+    const token = getAuthTokenFromLocalStorage();
     console.log('auth', auth);
 
     if (token) {

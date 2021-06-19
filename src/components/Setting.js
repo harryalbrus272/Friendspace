@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import { editUser } from '../actions/auth';
 
 const Setting = (props) => {
   function useInput(initialValue) {
@@ -17,7 +18,7 @@ const Setting = (props) => {
     return [value, bind, reset];
   }
   console.log('props', props);
-  const { user } = props.auth;
+  const { user, error } = props.auth;
   const [name, bindName, resetBindName] = useInput(props.auth.user.name);
   const [password, bindPassword, resetBindPassword] = useInput('');
   const [confirmPassword, bindConfirmPassword, resetBindConfirmPassword] =
@@ -30,6 +31,18 @@ const Setting = (props) => {
     resetBindPassword();
   };
 
+  const handleSave = () => {
+      console.log(name, password, confirmPassword);
+    props.dispatch(
+      editUser(
+        name,
+        password,
+        confirmPassword,
+        user._id
+      )
+    );
+  };
+
   return (
     <div className="settings">
       <div className="img-container">
@@ -38,6 +51,12 @@ const Setting = (props) => {
           alt="user-dp"
         />
       </div>
+      {error && <div className="alert error-dailog">{error}</div>}
+      {!error && (
+        <div className="alert success-dailog">
+          Successfully Updated the profile
+        </div>
+      )}
       <div className="field">
         <div className="field-label">Email</div>
         <div className="field-label">{user.email}</div>
@@ -64,7 +83,9 @@ const Setting = (props) => {
       )}
       <div className="btn-grp">
         {editMode ? (
-          <button className="button save-btn">Save</button>
+          <button className="button save-btn" onClick={() => handleSave()}>
+            Save
+          </button>
         ) : (
           <button
             className="button edit-btn"
