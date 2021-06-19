@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { addFriend, removeFriend } from '../actions/friends';
 import { fetchUserProfile } from '../actions/profile';
+import APIUrls from '../helpers/urls';
+import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
 const UserProfile = (props) => {
   console.log('props in UserProfile', props);
@@ -12,6 +15,9 @@ const UserProfile = (props) => {
     friends,
   } = props;
 
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+
   const user = profile.user;
   useEffect(() => {
     if (match.params.userId) {
@@ -22,10 +28,58 @@ const UserProfile = (props) => {
 
   const checkIfUserIsAFriend = () => {
     const userId = match.params.userId;
-    console.log(friends);
+    console.log('userID in User Profile', userId, 'friends', friends);
     const index = friends.map((friend) => friend.to_user._id).indexOf(userId);
-    if (index !== -1) return true;
+    if(index !== -1) return true;
     return false;
+  };
+
+  const handleAddFriend = async () => {
+    const userId = params.userId;
+    const url = APIUrls.addFriend(userId);
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (data.success) {
+      setSuccess(true);
+      setError(null);
+      props.dispatch(addFriend(data.data.friendship));
+    } else {
+      setSuccess(null);
+      setError(data.message);
+    }
+  };
+  const handleRemoveFriend = async () => {
+    const userId = params.userId;
+    const url = APIUrls.removeFriend(userId);
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    console.log('data not so special', data);
+
+    if (data.success) {
+      setSuccess(data.message);
+      setError(null);
+      props.dispatch(removeFriend(userId));
+    } else {
+      setSuccess(null);
+      setError(data.message);
+    }
   };
 
   console.log('props', params);
@@ -51,10 +105,21 @@ const UserProfile = (props) => {
 
       <div className="btn-grp">
         {!checkIfUserIsAFriend() ? (
-          <button className="button save-btn">Add Friend</button>
+          <button className="button save-btn" onClick={() => handleAddFriend()}>
+            Add Friend
+          </button>
         ) : (
-          <button className="button save-btn">Remove Friend</button>
+          <button
+            className="button save-btn"
+            onClick={() => handleRemoveFriend()}
+          >
+            Remove Friend
+          </button>
         )}
+        {success && (
+          <div className="alert success-dailog">Friend added successfully</div>
+        )}
+        {error && <div className="alert error-dailog">{error}</div>}
       </div>
     </div>
   );
