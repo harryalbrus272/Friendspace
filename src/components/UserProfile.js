@@ -8,18 +8,27 @@ const UserProfile = (props) => {
   const {
     match: { params },
     profile,
+    match,
+    friends,
   } = props;
 
   const user = profile.user;
   useEffect(() => {
-    const { match } = props;
     if (match.params.userId) {
       //dispatch an action
       props.dispatch(fetchUserProfile(match.params.userId));
     }
   }, []);
+
+  const checkIfUserIsAFriend = () => {
+    const userId = match.params.userId;
+    const index = friends.map((friend) => friend.to_user._id).indexOf(userId);
+    if (index !== -1) return true;
+    return false;
+  };
+
   console.log('props', params);
-  if(profile.inProgress) return <h1>Loading friend profile</h1>
+  if (profile.inProgress) return <h1>Loading friend profile</h1>;
   return (
     <div className="settings">
       <div className="img-container">
@@ -40,15 +49,20 @@ const UserProfile = (props) => {
       </div>
 
       <div className="btn-grp">
-        <button className="button save-btn">Add Friend</button>
+        {checkIfUserIsAFriend() ? (
+          <button className="button save-btn">Add Friend</button>
+        ) : (
+          <button className="button save-btn">Remove Friend</button>
+        )}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ profile }) => {
+const mapStateToProps = ({ profile, friends }) => {
   return {
     profile,
+    friends,
   };
 };
 
