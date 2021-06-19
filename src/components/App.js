@@ -75,10 +75,14 @@ function App(props) {
           <Route exact path="/login" component={Login} />
           {/* <Route exact path="/home" component={Home} /> */}
           <Route exact path="/register" component={Register}></Route>
-          <Route exact path="/user" component={UserProfile}></Route>
           <PrivateRoute
             path="/setting"
             component={Setting}
+            isLoggedin={auth.isLoggedin}
+          />
+          <PrivateRoute
+            path="/user/:userId"
+            component={UserProfile}
             isLoggedin={auth.isLoggedin}
           />
           <Route component={Page404} />

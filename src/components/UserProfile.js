@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 const UserProfile = (props) => {
+    console.log('props in UserProfile', props);
   useEffect(() => {
     const { match } = props;
     if (match.params.userId) {
@@ -10,7 +11,7 @@ const UserProfile = (props) => {
   const {
     match: { params },
   } = props;
-  console.log('this.props', params);
+  console.log('props', params);
   return (
     <div className="settings">
       <div className="img-container">
