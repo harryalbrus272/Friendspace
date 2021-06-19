@@ -15,10 +15,10 @@ import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 import { fetchUserFriends } from '../actions/friends';
 function App(props) {
   const { posts, auth, friends } = props;
+  console.log('friends in something', props);
   useEffect(() => {
     props.dispatch(fetchPosts());
     const token = getAuthTokenFromLocalStorage();
-    console.log('auth', auth);
 
     if (token) {
       const user = jwtDecode(token);
@@ -98,6 +98,7 @@ let mapStateToProps = (state) => {
     posts: state.posts,
     users: state.users,
     auth: state.auth,
+    friends: state.friends
   };
 };
 

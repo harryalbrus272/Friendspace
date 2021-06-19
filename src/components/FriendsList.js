@@ -1,6 +1,7 @@
 import { FriendsListItem } from './';
 
 const FriendsList = (props) => {
+  console.log("FriendsListItem", props);
   return (
     <div className="friends-list">
       <div className="header">Friends</div>
