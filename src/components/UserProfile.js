@@ -6,7 +6,6 @@ import APIUrls from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
 const UserProfile = (props) => {
-  console.log('props in UserProfile', props);
   //params inside the match destructured
   const {
     match: { params },
@@ -28,7 +27,6 @@ const UserProfile = (props) => {
 
   const checkIfUserIsAFriend = () => {
     const userId = match.params.userId;
-    console.log('userID in User Profile', userId, 'friends', friends);
     const index = friends.map((friend) => friend.to_user._id).indexOf(userId);
     if(index !== -1) return true;
     return false;
@@ -70,7 +68,6 @@ const UserProfile = (props) => {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log('data not so special', data);
 
     if (data.success) {
       setSuccess(data.message);
@@ -82,7 +79,6 @@ const UserProfile = (props) => {
     }
   };
 
-  console.log('props', params);
   if (profile.inProgress) return <h1>Loading friend profile</h1>;
   return (
     <div className="settings">

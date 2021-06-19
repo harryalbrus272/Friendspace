@@ -48,7 +48,6 @@ export function login(email, password) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('data', data);
         if (data.success) {
           //save the user option - dispatch save action
           localStorage.setItem('token', data.data.token);
@@ -158,7 +157,6 @@ export function editUser(name, password, confirmPassword, userId) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('EDIT_PROFILE data', data);
         if (data.success) {
           dispatch(editUserSuccessful(data.data.user));
           if (data.data.token) localStorage.setItem('token', data.data.token);

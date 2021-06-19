@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const PostsList = (props) => {
-  console.log('props', props);
   const { posts } = props;
   return (
     <div className="posts-list">

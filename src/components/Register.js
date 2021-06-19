@@ -26,7 +26,6 @@ const Register = (props) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     if (email && password && name && confirmPassword) {
-      console.log('props in register', props);
       props.dispatch(startSingup());
       props.dispatch(signup(email, password, confirmPassword, name));
     }

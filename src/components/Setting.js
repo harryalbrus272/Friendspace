@@ -17,7 +17,6 @@ const Setting = (props) => {
     };
     return [value, bind, reset];
   }
-  console.log('props in setting', props);
   const { user, error } = props.auth;
   const [name, bindName, resetBindName] = useInput(props.auth.user.name);
   const [password, bindPassword, resetBindPassword] = useInput('');
@@ -33,7 +32,6 @@ const Setting = (props) => {
   };
 
   const handleSave = () => {
-    console.log(name, password, confirmPassword);
     props.dispatch(editUser(name, password, confirmPassword, user._id));
   };
   useEffect(() => {

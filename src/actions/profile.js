@@ -38,7 +38,6 @@ export function fetchUserProfile(userId) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           dispatch(userProfileSuccess(data.data.user));
           return;

@@ -7,8 +7,6 @@ import reportWebVitals from './reportWebVitals';
 import { configureStore } from './store';
 
 const store = configureStore();
-console.log(store);
-console.log('state in index', store.getState());
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>

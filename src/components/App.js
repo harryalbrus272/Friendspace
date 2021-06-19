@@ -15,15 +15,12 @@ import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 import { fetchUserFriends } from '../actions/friends';
 function App(props) {
   const { posts, auth, friends } = props;
-  console.log('friends in something', props);
   useEffect(() => {
     props.dispatch(fetchPosts());
     const token = getAuthTokenFromLocalStorage();
 
     if (token) {
       const user = jwtDecode(token);
-
-      console.log('user', user);
       props.dispatch(
         authenticateUser({
           email: user.email,
@@ -34,7 +31,6 @@ function App(props) {
       props.dispatch(fetchUserFriends());
     }
   }, []);
-  console.log('state in app.js', props);
 
   //If you declare component like this and use the component property in router dom then you get router elements in props
   // const Home = (props) => {

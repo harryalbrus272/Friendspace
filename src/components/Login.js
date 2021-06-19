@@ -7,7 +7,6 @@ const Login = (props) => {
   const { error, inProgress, isLoggedin } = props.auth;
   //destructuring the from using the props or it will have the pathname of home 
   const { from } = props.location.state || { from: { pathname: '/' } };
-  console.log(props);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   //using Ref in the class based component to make a uncontroled component- a component whose state is not directly controlled by React.
@@ -19,7 +18,6 @@ const Login = (props) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     if (email && password) {
-      console.log('props in login', props);
       props.dispatch(login(email, password));
     }
   };
