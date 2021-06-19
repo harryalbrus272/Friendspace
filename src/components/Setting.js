@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { editUser } from '../actions/auth';
+import { clearAuthState, editUser } from '../actions/auth';
 
 const Setting = (props) => {
   function useInput(initialValue) {
@@ -17,13 +17,14 @@ const Setting = (props) => {
     };
     return [value, bind, reset];
   }
-  console.log('props', props);
+  console.log('props in setting', props);
   const { user, error } = props.auth;
   const [name, bindName, resetBindName] = useInput(props.auth.user.name);
   const [password, bindPassword, resetBindPassword] = useInput('');
   const [confirmPassword, bindConfirmPassword, resetBindConfirmPassword] =
     useInput('');
   const [editMode, setEditMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const handleEditProfile = () => {
     setEditMode((prev) => !prev);
     resetBindName();
@@ -32,16 +33,18 @@ const Setting = (props) => {
   };
 
   const handleSave = () => {
-      console.log(name, password, confirmPassword);
-    props.dispatch(
-      editUser(
-        name,
-        password,
-        confirmPassword,
-        user._id
-      )
-    );
+    console.log(name, password, confirmPassword);
+    props.dispatch(editUser(name, password, confirmPassword, user._id));
   };
+  useEffect(() => {
+    setMounted(true);
+      return () => {
+          if(mounted) {
+              setMounted(false)
+              props.dispatch(clearAuthState())
+          }
+      }
+  }, [])
 
   return (
     <div className="settings">
@@ -52,7 +55,7 @@ const Setting = (props) => {
         />
       </div>
       {error && <div className="alert error-dailog">{error}</div>}
-      {!error && (
+      {error === false && (
         <div className="alert success-dailog">
           Successfully Updated the profile
         </div>
