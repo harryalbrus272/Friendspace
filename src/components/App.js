@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Register, Setting } from './';
+import { Home, Navbar, Page404, Login, Register, Setting, UserProfile } from './';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
@@ -75,6 +75,7 @@ function App(props) {
           <Route exact path="/login" component={Login} />
           {/* <Route exact path="/home" component={Home} /> */}
           <Route exact path="/register" component={Register}></Route>
+          <Route exact path="/user" component={UserProfile}></Route>
           <PrivateRoute
             path="/setting"
             component={Setting}
