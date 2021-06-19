@@ -1,11 +1,12 @@
 import React from 'react';
-import { PostsList } from './';
+import { PostsList, FriendsList } from './';
 
 const Home = (props) => {
-  const { posts } = props;
+  const { posts, friends,isLoggedin } = props;
   return (
-    <div>
+    <div className="home">
       <PostsList posts={posts} />
+      {isLoggedin && <FriendsList friends={friends} />}
     </div>
   );
 };

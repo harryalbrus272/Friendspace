@@ -12,8 +12,9 @@ import { Home, Navbar, Page404, Login, Register, Setting, UserProfile } from './
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
+import { fetchUserFriends } from '../actions/friends';
 function App(props) {
-  const { posts, auth } = props;
+  const { posts, auth, friends } = props;
   useEffect(() => {
     props.dispatch(fetchPosts());
     const token = getAuthTokenFromLocalStorage();
@@ -30,6 +31,7 @@ function App(props) {
           name: user.name,
         })
       );
+      props.dispatch(fetchUserFriends());
     }
   }, []);
   console.log('state in app.js', props);
@@ -70,7 +72,7 @@ function App(props) {
           <Route
             exact
             path="/"
-            render={(props) => <Home {...props} posts={posts} />}
+            render={(props) => <Home {...props} posts={posts} friends={friends} isLoggedin={auth.isLoggedin} />}
           />
           <Route exact path="/login" component={Login} />
           {/* <Route exact path="/home" component={Home} /> */}

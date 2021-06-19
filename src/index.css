@@ -314,12 +314,12 @@ nav .nav-links ul li:hover {
   margin: 0 auto;
 }
 .home .posts-list {
-  flex-grow: 0.8;
+  flex-grow: 0.7;
 }
 .friends-list {
   background: #fff;
   margin-left: 50px;
-  flex-grow: 0.2;
+  flex-grow: 0.3;
   height: 50vh;
   box-sizing: border-box;
   margin-top: 20px;
