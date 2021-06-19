@@ -1,17 +1,25 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchUserProfile } from '../actions/profile';
 
 const UserProfile = (props) => {
-    console.log('props in UserProfile', props);
+  console.log('props in UserProfile', props);
+  //params inside the match destructured
+  const {
+    match: { params },
+    profile,
+  } = props;
+
+  const user = profile.user;
   useEffect(() => {
     const { match } = props;
     if (match.params.userId) {
       //dispatch an action
+      props.dispatch(fetchUserProfile(match.params.userId));
     }
   }, []);
-  const {
-    match: { params },
-  } = props;
   console.log('props', params);
+  if(profile.inProgress) return <h1>Loading friend profile</h1>
   return (
     <div className="settings">
       <div className="img-container">
@@ -23,12 +31,12 @@ const UserProfile = (props) => {
 
       <div className="field">
         <div className="field-label">Name</div>
-        <div className="field-value">Some name</div>
+        <div className="field-value">{user.name}</div>
       </div>
 
       <div className="field">
         <div className="field-label">Email</div>
-        <div className="field-value">test@test.com</div>
+        <div className="field-value">{user.email}</div>
       </div>
 
       <div className="btn-grp">
@@ -38,4 +46,10 @@ const UserProfile = (props) => {
   );
 };
 
-export default UserProfile;
+const mapStateToProps = ({ profile }) => {
+  return {
+    profile,
+  };
+};
+
+export default connect(mapStateToProps)(UserProfile);

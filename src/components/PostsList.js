@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const PostsList = (props) => {
-  console.log("props", props);
+  console.log('props', props);
   const { posts } = props;
   return (
     <div>
@@ -11,10 +12,13 @@ const PostsList = (props) => {
           <div className="post-wrapper" key={post._id}>
             <div className="post-header">
               <div className="post-avatar">
-                <img
-                  src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                  alt="user-pic"
-                />
+                <Link to={`/user/${post.user._id}`}>
+                  <img
+                    src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                    alt="user-pic"
+                  />
+                </Link>
+
                 <div>
                   <div className="post-author">{post.user.name}</div>
                   <div className="post-time">a minute ago</div>

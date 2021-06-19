@@ -17,3 +17,9 @@ export const CLEAR_AUTH_STATE = 'CLEAR_AUTH_STATE';
 //user profile related actions
 export const EDIT_USER_SUCCESSFUL = 'EDIT_USER_SUCCESSFUL';
 export const EDIT_USER_FAILED = 'EDIT_USER_FAILED';
+
+//fetching the post's user's profile
+
+export const USER_PROFILE_SUCCESS = 'USER_PROFILE_SUCCESS';
+export const USER_PROFILE_FAILURE = 'USER_PROFILE_FAILURE';
+export const FETCH_USER_PROFILE = 'FETCH_USER_PROFILE';
