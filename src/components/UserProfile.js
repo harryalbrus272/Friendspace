@@ -22,6 +22,7 @@ const UserProfile = (props) => {
 
   const checkIfUserIsAFriend = () => {
     const userId = match.params.userId;
+    console.log(friends);
     const index = friends.map((friend) => friend.to_user._id).indexOf(userId);
     if (index !== -1) return true;
     return false;
@@ -49,7 +50,7 @@ const UserProfile = (props) => {
       </div>
 
       <div className="btn-grp">
-        {checkIfUserIsAFriend() ? (
+        {!checkIfUserIsAFriend() ? (
           <button className="button save-btn">Add Friend</button>
         ) : (
           <button className="button save-btn">Remove Friend</button>
