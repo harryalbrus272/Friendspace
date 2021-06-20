@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { createComment } from '../actions/posts';
+import { addLike, createComment } from '../actions/posts';
 import { Comments } from './';
-const Post = ({ post, dispatch }) => {
+const Post = ({ post, dispatch, user }) => {
   const [comment, setComment] = useState('');
+  console.log(user._id);
+  const isPostLikedByUser = post.likes.includes(user._id);
+  console.log(isPostLikedByUser);
   const onCommentChangeHandler = (event) => {
     console.log(event.key);
     setComment(event.target.value);
@@ -17,6 +20,11 @@ const Post = ({ post, dispatch }) => {
       setComment('');
     }
   };
+
+  const handlePostLike = () => {
+    dispatch(addLike(post._id, 'Post', user._id));
+  };
+
   return (
     <div className="post-wrapper" key={post._id}>
       <div className="post-header">
@@ -35,13 +43,24 @@ const Post = ({ post, dispatch }) => {
         </div>
         <div className="post-content">{post.content}</div>
         <div className="post-actions">
-          <div className="post-like">
-            <img
-              src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
-              alt="likes-icon"
-            />
+          <button
+            className="post-like no-btn"
+            onClick={(e) => handlePostLike(e)}
+          >
+            {isPostLikedByUser ? (
+              <img
+                src="https://as2.ftcdn.net/jpg/02/33/05/69/500_F_233056931_chB2vj6ThgrK2YRzKr9Ahg58XTw1K3Tn.jpg"
+                alt="likes-post"
+              />
+            ) : (
+              <img
+                src="https://img-premium.flaticon.com/png/512/3269/premium/3269472.png?token=exp=1624201723~hmac=d8efd62d4b3c3fa74861622b3ed69549"
+                alt="likes-icon"
+              />
+            )}
+
             <span>{post.likes.length}</span>
-          </div>
+          </button>
           <div className="post-comments-icon">
             <img
               src="https://image.flaticon.com/icons/svg/1380/1380338.svg"
@@ -73,4 +92,10 @@ Post.propTypes = {
   post: PropTypes.object.isRequired,
 };
 
-export default connect()(Post);
+function mapStateToProps({ auth }) {
+  return {
+    user: auth.user,
+  };
+}
+
+export default connect(mapStateToProps)(Post);
