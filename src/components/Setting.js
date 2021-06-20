@@ -36,13 +36,13 @@ const Setting = (props) => {
   };
   useEffect(() => {
     setMounted(true);
-      return () => {
-          if(mounted) {
-              setMounted(false)
-              props.dispatch(clearAuthState())
-          }
+    return () => {
+      if (mounted) {
+        setMounted(false);
+        props.dispatch(clearAuthState());
       }
-  }, [])
+    };
+  }, []);
 
   return (
     <div className="settings">
