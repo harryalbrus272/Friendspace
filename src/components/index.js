@@ -11,3 +11,4 @@ export { default as FriendsListItem } from './FriendsListItem';
 export { default as CreatePost } from './CreatePost';
 export { default as Post } from './Post';
 export { default as Comments } from './Comments';
+export { default as Chat } from './Chat';

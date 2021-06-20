@@ -1,5 +1,5 @@
 import React from 'react';
-import { PostsList, FriendsList } from './';
+import { PostsList, FriendsList, Chat } from './';
 
 const Home = (props) => {
   const { posts, friends,isLoggedin } = props;
@@ -7,6 +7,7 @@ const Home = (props) => {
     <div className="home">
       <PostsList posts={posts} />
       {isLoggedin && <FriendsList friends={friends} />}
+      {isLoggedin && <Chat />}
     </div>
   );
 };
