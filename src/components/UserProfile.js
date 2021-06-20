@@ -28,7 +28,7 @@ const UserProfile = (props) => {
     return () => {
       console.log('unloaded');
     }
-  }, []);
+  }, [match]);
 
   const checkIfUserIsAFriend = () => {
     const userId = match.params.userId;

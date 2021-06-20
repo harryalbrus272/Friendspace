@@ -4,7 +4,7 @@ const initialSearchState = {
   results: [],
 };
 
-export function search(state = initialSearchState, action) {
+export default function search(state = initialSearchState, action) {
   switch (action.type) {
     case FETCH_SEARCH_RESULTS_SUCCESS:
       return {
