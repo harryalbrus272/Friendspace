@@ -6,6 +6,7 @@ import APIUrls from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
 const UserProfile = (props) => {
+  console.log(props);
   //params inside the match destructured
   const {
     match: { params },
@@ -19,9 +20,13 @@ const UserProfile = (props) => {
 
   const user = profile.user;
   useEffect(() => {
+    console.log('loaded');
     if (match.params.userId) {
       //dispatch an action
       props.dispatch(fetchUserProfile(match.params.userId));
+    }
+    return () => {
+      console.log('unloaded');
     }
   }, []);
 
@@ -48,7 +53,6 @@ const UserProfile = (props) => {
 
     if (data.success) {
       setSuccess(true);
-      setError(null);
       props.dispatch(addFriend(data.data.friendship));
     } else {
       setSuccess(null);
@@ -78,6 +82,7 @@ const UserProfile = (props) => {
       setError(data.message);
     }
   };
+  console.log({success, error});
 
   if (profile.inProgress) return <h1>Loading friend profile</h1>;
   return (

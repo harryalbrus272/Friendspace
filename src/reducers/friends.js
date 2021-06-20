@@ -4,6 +4,7 @@ const defaultProfileState = [];
 
 // profile reducer
 export default function friends(state = defaultProfileState, action) {
+  console.log('state in reducer', state, 'action in friends reducer', action);
   switch (action.type) {
     case FETCH_FRIENDS_SUCCESS:
       return [...action.friends];

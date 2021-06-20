@@ -8,3 +8,4 @@ export { default as Setting } from './Setting';
 export { default as UserProfile } from './UserProfile';
 export { default as FriendsList } from './FriendsList';
 export { default as FriendsListItem } from './FriendsListItem';
+export { default as CreatePost } from './CreatePost';
